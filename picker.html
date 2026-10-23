@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>My Projects</title>
+<style>
+*{box-sizing:border-box}
+body{background:#0f141b;color:#e8eef2;font-family:"Segoe UI",Tahoma,Arial;margin:0;padding:28px}
+.header{max-width:1200px;margin:0 auto 20px;display:flex;align-items:center;justify-content:space-between}
+.header h1{color:#a8d506;font-size:24px;margin:0}
+.header .date{color:#9fb0c0;font-size:12px}
+.section{max-width:1200px;margin:0 auto 24px}
+.section h2{font-size:13px;color:#9fb0c0;text-transform:uppercase;letter-spacing:1px;margin:0 0 10px;border-bottom:1px solid #2c3a4f;padding-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.card{background:#1a2230;border:1px solid #2c3a4f;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card h3{margin:0;font-size:16px;color:#fff;display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.dot.live{background:#a8d506;box-shadow:0 0 6px #a8d506}
+.dot.work{background:#f5c518}
+.dot.pause{background:#5b6b7c}
+.card .desc{font-size:12px;color:#9fb0c0;margin:0;line-height:1.6}
+.card code{font-size:11px;color:#cfd8e3;background:#0d1319;padding:5px 9px;border-radius:5px;direction:ltr;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btns{display:flex;gap:8px;margin-top:auto;padding-top:6px}
+a,.cp{font-family:inherit;font-size:12px;padding:7px 14px;border-radius:6px;text-decoration:none;cursor:pointer;border:1px solid #3a4a63;background:#243040;color:#cfd8e3}
+a:hover,.cp:hover{border-color:#a8d506;color:#a8d506}
+a.go{background:#a8d506;color:#0f141b;border-color:#a8d506;font-weight:700}
+a.go:hover{background:#c2f00e;color:#0f141b}
+a.sess{border-color:#a8d506;color:#a8d506;font-weight:700}
+.footer{max-width:1200px;margin:24px auto 0;color:#5b6b7c;font-size:11px;text-align:center}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>My Projects</h1>
+<span class="date">Updated</span>
+</div>
+
+<div class="section">
+<h2>Active</h2>
+<div class="grid">
+
+<div class="card">
+<h3><span class="dot live"></span>Example Project</h3>
+<p class="desc">One-line description of the project.</p>
+<code>D:\projects\example-project</code>
+<div class="btns">
+<a class="go" href="https://example.com" target="_blank">Open site</a>
+<a href="file:///D:/projects/example-project/">Folder</a>
+<button class="cp" onclick="navigator.clipboard.writeText('D:\\projects\\example-project')">Copy path</button>
+</div>
+</div>
+
+<div class="card">
+<h3><span class="dot work"></span>Another Project</h3>
+<p class="desc">Local work, not shipped yet.</p>
+<code>D:\projects\another-project</code>
+<div class="btns">
+<a href="file:///D:/projects/another-project/">Folder</a>
+<button class="cp" onclick="navigator.clipboard.writeText('D:\\projects\\another-project')">Copy path</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>Paused / Archive</h2>
+<div class="grid">
+
+<div class="card">
+<h3><span class="dot pause"></span>Old Project</h3>
+<p class="desc">Archived. Kept for reference.</p>
+<code>D:\projects\old-project</code>
+<div class="btns">
+<a href="file:///D:/projects/old-project/">Folder</a>
+<button class="cp" onclick="navigator.clipboard.writeText('D:\\projects\\old-project')">Copy path</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="footer">Terminal session opens a ready terminal chat. Desktop app opens Hermes desktop (pick the matching project there). To add a project, duplicate a card.</div>
+<script>
+(function(){
+var SCHEME = 'mysessions'; // must match windows/register-protocol.ps1
+document.querySelectorAll('.card').forEach(function(c){
+  var code = c.querySelector('code');
+  var btns = c.querySelector('.btns');
+  if(!code || !btns) return;
+  var p = code.textContent.trim().replace(/\\/g, '/');
+  var a = document.createElement('a');
+  a.className = 'sess';
+  a.href = SCHEME + '://' + p;
+  a.textContent = 'Terminal session';
+  btns.appendChild(a);
+  var d = document.createElement('a');
+  d.className = 'sess';
+  d.href = 'hermes://open/sessions';
+  d.textContent = 'Desktop app';
+  d.title = 'Open Hermes desktop (pick the project there)';
+  btns.appendChild(d);
+});
+})();
+</script>
+</body>
+</html>
